@@ -1,8 +1,7 @@
-// Variables y Arrays
+
 let ingresosMensuales = 0;
 let gastos = [];
 
-// Elementos del DOM
 const ingresoForm = document.getElementById("ingresoForm");
 const gastosForm = document.getElementById("gastosForm");
 const ingresoInput = document.getElementById("ingreso");
@@ -12,7 +11,7 @@ const ingresosTotales = document.getElementById("ingresosTotales");
 const saldoElement = document.getElementById("saldo");
 const listaGastos = document.getElementById("listaGastos");
 
-// Función para mostrar saldo actualizado
+
 const actualizarSaldo = () => {
     const totalGastos = gastos.reduce((suma, gasto) => suma + gasto.monto, 0);
     const saldo = ingresosMensuales - totalGastos;
@@ -21,7 +20,7 @@ const actualizarSaldo = () => {
     saldoElement.className = saldo >= 0 ? "saldo" : "saldo negativo";
 };
 
-// Función para agregar un gasto al DOM
+
 const agregarGastoDOM = (descripcion, monto) => {
     const fila = document.createElement("tr");
     fila.innerHTML = `
@@ -31,7 +30,7 @@ const agregarGastoDOM = (descripcion, monto) => {
     listaGastos.appendChild(fila);
 };
 
-// Mostrar el formulario de gastos y ocultar el de ingresos al establecer ingresos
+
 ingresoForm.addEventListener("submit", (e) => {
     e.preventDefault();
     ingresosMensuales = parseFloat(ingresoInput.value);
@@ -43,19 +42,19 @@ ingresoForm.addEventListener("submit", (e) => {
 
     ingresosTotales.textContent = ingresosMensuales.toFixed(2);
 
-    // Mostrar formulario de gastos
+
     gastosForm.style.display = "block";
 
-    // Ocultar formulario de ingresos
+    
     ingresoForm.style.display = "none";
 
-    // Guardar los ingresos en LocalStorage
+    
     localStorage.setItem("ingresosMensuales", ingresosMensuales);
 
     actualizarSaldo();
 });
 
-// Evento para registrar un nuevo gasto
+
 gastosForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -67,24 +66,20 @@ gastosForm.addEventListener("submit", (e) => {
         return;
     }
 
-    // Guardar el gasto en el array
+    
     gastos.push({ descripcion, monto });
 
-    // Guardar los gastos en el LocalStorage
     localStorage.setItem("gastos", JSON.stringify(gastos));
 
-    // Mostrar el gasto en la tabla
+
     agregarGastoDOM(descripcion, monto);
 
-    // Actualizar el saldo
     actualizarSaldo();
 
-    // Limpiar los inputs
     descripcionInput.value = "";
     montoInput.value = "";
 });
 
-// Recuperar datos del LocalStorage al cargar la página
 window.addEventListener("load", () => {
     const gastosGuardados = localStorage.getItem("gastos");
     if (gastosGuardados) {
@@ -105,26 +100,23 @@ window.addEventListener("load", () => {
     actualizarSaldo();
 });
 
-// Botón de restablecer valores
+
 const resetButton = document.getElementById("resetButton");
 
 resetButton.addEventListener("click", () => {
     if (confirm("¿Estás seguro de que deseas restablecer todos los valores?")) {
-        // Eliminar datos del LocalStorage
+        
         localStorage.removeItem("ingresosMensuales");
         localStorage.removeItem("gastos");
 
-        // Reiniciar las variables
         ingresosMensuales = 0;
         gastos = [];
 
-        // Restablecer los valores en el DOM
         ingresosTotales.textContent = "0.00";
         saldoElement.textContent = "0.00";
         saldoElement.className = "saldo";
         listaGastos.innerHTML = "";
 
-        // Mostrar el formulario de ingresos y ocultar el de gastos
         ingresoForm.style.display = "block";
         gastosForm.style.display = "none";
 
