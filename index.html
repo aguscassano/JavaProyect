@@ -10,6 +10,9 @@
 
     <link rel="stylesheet" href="./css/style.css">
 
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script defer src="script.js"></script>
+
     <style>
         body {
             padding: 20px;
@@ -33,57 +36,51 @@
 </head>
 
 <body>
+
     <div class="container">
         <h1>Simulador de Gastos Mensuales</h1>
 
-        <!-- Formulario para Ingresos -->
-        <form id="ingresoForm" class="mb-4">
-            <div class="mb-3">
-                <label for="ingreso" class="form-label">Ingresos Mensuales</label>
-                <input type="number" id="ingreso" class="form-control" placeholder="Ej: 50000" required>
-            </div>
-            <button type="submit" class="btn btn-success">Establecer Ingreso</button>
-        </form>
-        
-        <!-- Formulario para Gastos -->
-        <form id="gastosForm" style="display: none;" class="border p-4 rounded shadow-sm bg-light">
-            <h3 class="mb-3">Agregar Gastos</h3>
-            <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
-                <input type="text" id="descripcion" class="form-control" placeholder="Ejemplo: Alquiler" required>
-            </div>
-            <div class="mb-3">
-                <label for="monto" class="form-label">Monto</label>
-                <input type="number" id="monto" class="form-control" placeholder="Ejemplo: 1500" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Agregar Gasto</button>
+        <form id="ingresoForm">
+            <label for="ingreso">Ingresos Mensuales:</label>
+            <input type="number" id="ingreso" placeholder="Agregue sus ingresos" required>
+            <button type="submit">Guardar</button>
         </form>
 
-        <div>
-            <button id="resetButton" class="btn btn-danger mt-3 restablecer">Restablecer Valores</button>
-        </div>
-        <!-- Resumen -->
-        <div class="mb-4 resumen">
-            <h3>Resumen</h3>
-            <p>Ingresos Mensuales: $<span id="ingresosTotales">0.00</span></p>
-            <p>Saldo Restante: $<span id="saldo" class="saldo">0.00</span></p>
+        <div id="resumen">
+            <h2>Ingresos: $<span id="ingresosTotales">0.00</span></h2>
+            <h2>Saldo Disponible: $<span id="saldo">0.00</span></h2>
         </div>
 
-        <!-- Tabla de Gastos -->
+        <form id="gastosForm" style="display: none;">
+            <h3>Registrar Gasto</h3>
+            <input type="text" id="descripcion" placeholder="Descripción" required>
+            <input type="number" id="monto" placeholder="Monto" required>
+            <button type="submit">Agregar Gasto</button>
+        </form>
+
+        <h3>Listado de Gastos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody id="listaGastos"></tbody>
+        </table>
+
         <div>
-            <h3>Gastos Registrados</h3>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Descripción</th>
-                        <th>Monto</th>
-                    </tr>
-                </thead>
-                <tbody id="listaGastos">
-                
-                </tbody>
-            </table>
+            <h3>Conversión de Moneda</h3>
+            <select id="moneda">
+                <option value="USD">Dólar (USD)</option>
+                <option value="EUR">Euro (EUR)</option>
+                <option value="BRL">Real Brasileño (BRL)</option>
+            </select>
+            <button id="convertirMoneda">Convertir</button>
+            <p>Saldo en <span id="monedaSeleccionada">USD</span>: <strong id="saldoConvertido">0.00</strong></p>
         </div>
+
+        <button id="resetDatos">Restablecer</button>
     </div>
 
     <script src="./js/script.js"></script>
